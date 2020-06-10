@@ -6,9 +6,10 @@ package edu.au.cc.gallery.tools.UserAdmin;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
+    /*    @Test public void testAppHasAGreeting() {
         App classUnderTest = new App();
         assertNotNull("app should have a greeting", classUnderTest.getGreeting());
-    }
+	}*/
 }
