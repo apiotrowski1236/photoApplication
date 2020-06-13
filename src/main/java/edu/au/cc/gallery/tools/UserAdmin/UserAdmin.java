@@ -1,29 +1,26 @@
 package edu.au.cc.gallery.tools;
 import java.sql.SQLException;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 public class UserAdmin {
-    DB myDatabase;
     UserAdminHelper myHelper;
-
+    DB myDatabase;
     public UserAdmin() {
-	myDatabase = new DB();
 	myHelper = new UserAdminHelper();
+	myDatabase = new DB();
     }
     
     public static void main(String[] args) {
 	UserAdmin admin = new UserAdmin();
+       	admin.myHelper.addRoutes();
 	
-	System.out.println("Hello world testing!");
-	admin.myHelper.addRoutes();
-	
-	/*try {
+	try {
 	   JSONObject printOut =  admin.myDatabase.getSecret();
-	   // String password = admin.myDatabase.getPassword(printOut);
-	   //String user = admin.myDatabase.getUserName(printOut);
 	   System.out.println(printOut);
-	   //  System.out.println(user);
+	   
 	}
 	catch(Exception e) {
 	    System.out.println("failed to get secret!");
@@ -31,12 +28,14 @@ public class UserAdmin {
 	}
 		try {
 	    admin.myDatabase.connect();
-	    admin.myDatabase.listUsers();
+	    JSONArray  myTest = admin.myDatabase.listUsers();
+	    System.out.println(myTest); 
 	    admin.myDatabase.close();
-	}
+          }
+
 	catch (SQLException ex) {
 	    ex.printStackTrace();
-	    } */
+	    } 
 
 	        
     }
