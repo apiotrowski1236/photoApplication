@@ -18,15 +18,13 @@ public class UserAdmin {
        	admin.myHelper.addRoutes();
 	
 	try {
-	   JSONObject printOut =  admin.myDatabase.getSecret();
-	   System.out.println(printOut);
-	   
+	   JSONObject printOut =  admin.myDatabase.getSecret();	   
 	}
 	catch(Exception e) {
 	    System.out.println("failed to get secret!");
 	    e.printStackTrace();
 	}
-		try {
+	/*	try {
 	    admin.myDatabase.connect();
 	    JSONArray  myTest = admin.myDatabase.listUsers();
 	    System.out.println(myTest); 
@@ -35,7 +33,7 @@ public class UserAdmin {
 
 	catch (SQLException ex) {
 	    ex.printStackTrace();
-	    } 
+	    } */ 
 
 	        
     }
