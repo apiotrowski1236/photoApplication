@@ -3,7 +3,6 @@ import java.sql.SQLException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.HashMap;
 public class UserAdmin {
     UserAdminHelper myHelper;
@@ -24,17 +23,6 @@ public class UserAdmin {
 	    System.out.println("failed to get secret!");
 	    e.printStackTrace();
 	}
-	/*	try {
-	    admin.myDatabase.connect();
-	    JSONArray  myTest = admin.myDatabase.listUsers();
-	    System.out.println(myTest); 
-	    admin.myDatabase.close();
-          }
-
-	catch (SQLException ex) {
-	    ex.printStackTrace();
-	    } */ 
-
 	        
     }
 }
