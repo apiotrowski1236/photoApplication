@@ -132,8 +132,17 @@ public String sendNameChange(Request req, Response resp) {
 
     /*Map the GET and POST routes. Open up Port 5000 */
     public void addRoutes() {
-	port(5000);
-	 //Show the webpage
+	String portString = System.getenv("JETTY_PORT");
+	//If we can't access JETTY_PORT, choose 5000 as a backup
+	if ((portString == null) || (portString.equals(""))) {
+	    port(5000);
+	}
+	else {
+	    port(Integer.parseInt(portString));
+	}
+
+
+	//show the webpage
         get("/admin",  (req, res) -> admin(req, res));
 
 	get ("/hello", (req, res) -> "Hello Testing!");
