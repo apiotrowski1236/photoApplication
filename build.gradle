@@ -39,5 +39,5 @@ implementation 'software.amazon.awssdk:secretsmanager'
 
 application {
     // Define the main class for the application.
-    mainClassName = 'edu.au.cc.gallery.tools.UserAdmin'
+    mainClassName = 'edu.au.cc.gallery.tools.ui.UserAdmin'
 }

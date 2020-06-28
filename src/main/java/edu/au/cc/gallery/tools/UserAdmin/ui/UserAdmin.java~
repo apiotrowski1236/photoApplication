@@ -1,4 +1,5 @@
-package edu.au.cc.gallery.tools;
+package edu.au.cc.gallery.tools.ui;
+import edu.au.cc.gallery.tools.data.DB;
 import java.sql.SQLException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 public class UserAdmin {
     UserAdminHelper myHelper;
     DB myDatabase;
+    RouteMapper mapper;
     public UserAdmin() {
 	myHelper = new UserAdminHelper();
 	myDatabase = new DB();
@@ -14,8 +16,8 @@ public class UserAdmin {
     
     public static void main(String[] args) {
 	UserAdmin admin = new UserAdmin();
-       	admin.myHelper.addRoutes();
-	
+	//	admin.myHelper.connectToWebApp();
+	mapper.connectToWebApp();
 	try {
 	   JSONObject printOut =  admin.myDatabase.getSecret();	   
 	}

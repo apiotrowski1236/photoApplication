@@ -1,4 +1,4 @@
-package edu.au.cc.gallery.tools;
+package edu.au.cc.gallery.tools.data;
 import java.util.ArrayList;
 import org.json.simple.parser.*;
 import org.json.simple.JSONArray; 
@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
 import java.util.HashMap;
+import edu.au.cc.gallery.tools.aws.Secrets;
+
 public class DB {
     Secrets secretManager = new Secrets();
     private Connection connection;
@@ -67,28 +69,27 @@ public class DB {
 
     /************************DB Search/Change Functions*************************************/
 
-    /*Display all the users in the users table.*/
-    public JSONArray  listUsers() throws SQLException {
-	connect();
 
-	PreparedStatement statement = connection.prepareStatement("select * from users");
-	JSONArray ja = new JSONArray();
+    public ResultSet executePreparedStatement(String ps) throws SQLException {
+	PreparedStatement statement = connection.prepareStatement(ps);
 	ResultSet results = statement.executeQuery();
-
-	while (results.next()) {
-		//Make a user JSON object from a row.
-	    String username  = results.getString(1);
-	    String password = results.getString(2);
-            String fullname = results.getString(3);
-	    JSONObject jo = new JSONObject();
-	    jo.put("username", username);
-	    jo.put("password", password);
-	    jo.put("fullname", fullname);
-	    ja.add(jo);
-	    }
-        close();
-        return ja;
+	return results;
     }
+
+
+    public void executeVoidPreparedStatement(PreparedStatement ps) throws SQLException {
+	ps.execute();
+    }
+
+
+    public void addUser(String userIn, String passwordIn, String nameIn) throws SQLException {
+	String sql = "INSERT INTO users(username, password, full_name)" + "VALUES(?,?,?)";
+	PreparedStatement statement = connection.prepareStatement(sql);
+	statement.setString(1, userIn);
+	statement.setString(2, passwordIn);
+	statement.setString(3, nameIn);
+	statement.execute();
+    }    
 
     /*Search for a user: helpful for edits and deletes. */
     public boolean searchForUser(String userIn) throws SQLException {
@@ -104,17 +105,6 @@ public class DB {
 	return false;
     }
 
-    /*Add a new user*/
-    public void addUser(String userIn, String passwordIn, String nameIn) throws SQLException {
-	connect();
-	String sql = "INSERT INTO users(username, password, full_name)" + "VALUES(?,?,?)";
-	PreparedStatement statement = connection.prepareStatement(sql);
-	statement.setString(1, userIn);
-	statement.setString(2, passwordIn);
-	statement.setString(3, nameIn);
-	statement.execute();
-	close();
-    }
 
     /*Delete a user*/
     public void deleteUser(String userIn) throws SQLException {
