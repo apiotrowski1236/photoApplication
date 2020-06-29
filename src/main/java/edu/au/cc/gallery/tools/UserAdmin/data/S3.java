@@ -1,0 +1,32 @@
+package edu.au.cc.gallery.tools.data;
+
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import java.io.File;
+import java.nio.file.Paths;
+
+public class S3 {
+    private AmazonS3 s3;
+    
+    public void connect() {
+        s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
+    }
+
+
+
+    
+    public void addPhoto(String bucket, String path) {
+
+	try {
+	 String key = Paths.get(path).getFileName().toString();
+	 s3.putObject(bucket, key, new File(path));
+        }
+	
+	catch (AmazonServiceException e) {
+	    System.err.println(e.getErrorMessage());
+	}
+    }
+}
+ 

@@ -1,3 +1,4 @@
+package edu.au.cc.gallery.tools.data;
 public class Photo {
     private String path;
     private String owner;
