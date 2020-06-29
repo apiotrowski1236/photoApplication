@@ -3,24 +3,16 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>AKP0048 UserAdmin WebApp</title>
+  <title>Admin</title>
 </head>
-
-
-
 <body>
-  
-<h1>Welcome to the User Admin Web App! </h1>
+<nav>
+  <a href="/admin/users/">Admin</a> |
+  <a href="/admin/add">Add</a> |
+  <a href="/admin/view">View</a> |
+</nav>
 
- <h2> <a href="/admin/list" method="GET">Click here to display the users in your database</a></h2>
-  <hr/>
-  <h2> Add a new user </h2>
- <form id="addform"  action= "/admin/add" method="POST">
-    User Name : <input type="text" name="userName" value="" required /> </br>
-    Password: <input type="text" name="password" value="" required /> </br>
-    Full Name: <input type="text" name="fullname" value="" required /> </br>
-    <input type="submit" value="Add" />
- </form>
- 
+<p> Welcome to...the admin page! </p>
 </body>
 </html>
+

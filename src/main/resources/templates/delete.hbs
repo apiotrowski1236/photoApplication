@@ -1,11 +1,18 @@
 <!doctype html>
+
+<html lang="en">
 <head>
-<title>Delete Confirmation for {{username}}</title>
-<meta charset="UTF-8">
+  <meta charset="utf-8">
+  <title>Delete Check</title>
 </head>
 <body>
-<h2>Click <a href="/admin/delete?username={{username}}" method="GET"> here</a> to delete {{username}}.</h2>
-<h2>Click<a href="/admin" method="GET"> here</a> to return to homepage </h2>
-</body>
+<nav>
+  <a href="/admin/users/">Admin</a> |
+  <a href="/admin/add">Add</a> |
+  <a href="/admin/view">View</a> |
+</nav>
 
+<p> Are you sure that you want to delete this?! </p>
+</body>
 </html>
+
