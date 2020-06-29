@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
 <head>
-<title>Delete Check</title>
+<title>Delete Confirmation for {{username}}</title>
+<meta charset="UTF-8">
 </head>
 <body>
-<ul>
-<li><a href="/admin/users" method="GET">Admin Homepage</a></li>
-<li><a href="/admin/show" method="GET">Show Photos</a></li>
-<li><a href="/admin/add" method="GET">Add a Photo</a></li>
-</ul>
-<h1>Wait!</h1>
-<p>Are you sure you want to delete...</p>
-
+<h2>Click <a href="/admin/delete?username={{username}}" method="GET"> here</a> to delete {{username}}.</h2>
+<h2>Click<a href="/admin" method="GET"> here</a> to return to homepage </h2>
 </body>
+
 </html>
