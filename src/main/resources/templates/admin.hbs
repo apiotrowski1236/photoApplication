@@ -1,26 +1,16 @@
-<!doctype html>
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>AKP0048 UserAdmin WebApp</title>
+<title>Admin</title>
 </head>
-
-
-
 <body>
-  
-<h1>Welcome to the User Admin Web App! </h1>
+<ul>
+<li><a href="/admin/users" method="GET">Admin Homepage</a></li>
+<li><a href="/admin/show" method="GET">Show Photos</a></li>
+<li><a href="/admin/add" method="GET">Add a Photo</a></li>
+</ul>
+<h1>Congrats!</h1>
+<p>You've reached the admin page...</p>
 
- <h2> <a href="/admin/list" method="GET">Click here to display the users in your database</a></h2>
-  <hr/>
-  <h2> Add a new user </h2>
- <form id="addform"  action= "/admin/add" method="POST">
-    User Name : <input type="text" name="userName" value="" required /> </br>
-    Password: <input type="text" name="password" value="" required /> </br>
-    Full Name: <input type="text" name="fullname" value="" required /> </br>
-    <input type="submit" value="Add" />
- </form>
- 
 </body>
 </html>
