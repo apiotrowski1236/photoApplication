@@ -1,4 +1,4 @@
-package edu.au.cc.gallery.tools.data;
+package edu.au.cc.gallery.tools.UserAdmin.data;
 import java.util.List;
 
 public interface DAO<T> {

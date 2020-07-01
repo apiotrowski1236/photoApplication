@@ -1,4 +1,4 @@
-package edu.au.cc.gallery.tools.ui;
+ package edu.au.cc.gallery.tools.UserAdmin.ui;
 
 import static spark.Spark.*;
 import spark.Request;
@@ -6,58 +6,64 @@ import spark.Response;
 import org.json.simple.JSONArray;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import java.sql.SQLException;
+
+import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
-import edu.au.cc.gallery.tools.data.Postgres;
-import edu.au.cc.gallery.tools.data.UserDAO;
-import edu.au.cc.gallery.tools.data.DB;
+
+import edu.au.cc.gallery.tools.UserAdmin.data.Photo;
+import edu.au.cc.gallery.tools.UserAdmin.data.DAO;
+import edu.au.cc.gallery.tools.UserAdmin.data.daoMaker;
+import edu.au.cc.gallery.tools.UserAdmin.data.PhotoDAO;
+import edu.au.cc.gallery.tools.UserAdmin.data.S3;
 public class UserAdminHelper {
 
-   public static String  parseUserNameOnly(Request req) {
-	String username;
-	username = req.queryParams("username");
-	return username;
+   public static String  parsePathOnly(Request req) {
+        String path;
+	path = req.queryParams("path");
+	return path;
     }
 
 
-    
-    public static String add(Request req, Response resp) {
-	String username, password, fullname;
-	username = req.queryParams("userName");
-	password = req.queryParams("password");
-	fullname = req.queryParams("fullname");
-	try {
-            UserDAO dao = Postgres.getUserDAO();
-	    dao.addUser(username, password, fullname);
-	}
-	catch(Exception e) {
-	    e.printStackTrace();
-	}
-	return makeConfirmationPage(username, "addconfirmation.hbs");
-    }
 
+    public static void add(String path) {
+       String owner = "TESTFORNOWBUTREPLACELATER";
+       Photo photo = new Photo(path, owner);
+       try {
+	   DAO dao = daoMaker.getPhotoDAO();
+	   dao.add(photo);
+       }
+       catch(Exception e) {
+	   e.printStackTrace();
+       }
+    }
     
+    
+
       public static String delete(Request req, Response resp) {
-	  String username = parseUserNameOnly(req);
+	  String path;
+	  String owner = "TESTFORNOWBUTREPLACELATER";
+	  path = req.queryParams("path");
+	  Photo photo = new Photo(path, owner);
 	  try {
-	    UserDAO dao = Postgres.getUserDAO();
-            dao.deleteUser(username);
+	    DAO dao = daoMaker.getPhotoDAO();
+            dao.delete(photo);
 	  }
 	  catch(Exception e) {
 	      e.printStackTrace();
 	  }
-	  return makeConfirmationPage(username, "deleteconfirmation.hbs");
-    }
+	  return "deleted";
+	  //return makeConfirmationPage(username, "deleteconfirmation.hbs");
+	  } 
 
-    public static String  makeConfirmationPage(String username, String fileName) {
+    public static String  makeConfirmationPage(String path, String fileName) {
 	Map<String, Object> model = new HashMap<String, Object>();
-	model.put("username", username);
+	model.put("path", path);
 	return new HandlebarsTemplateEngine()
 	    .render(new ModelAndView(model, fileName));
     }
 
-    
+    /*
 
       public static String change(Request req, Response resp) {
         Map<String, Object> model = new HashMap<String, Object>();
@@ -116,7 +122,7 @@ public static String sendNameChange(Request req, Response resp) {
 	   model.put("users", userArray);
 	   return new HandlebarsTemplateEngine()
 	       .render(new ModelAndView(model, "userlist.hbs"));
-    }
+	       } */
 
     
     public static String modelMaker(Request req, Response resp, String fileName) {

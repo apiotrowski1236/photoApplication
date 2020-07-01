@@ -42,5 +42,5 @@ implementation 'software.amazon.awssdk:s3'
 
 application {
     // Define the main class for the application.
-    mainClassName = 'edu.au.cc.gallery.tools.ui.UserAdmin'
+    mainClassName = 'edu.au.cc.gallery.tools.UserAdmin.ui.UserAdmin'
 }

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Admin</title>
+  <title>Add</title>
 </head>
 <body>
 <nav>
@@ -12,7 +12,15 @@
   <a href="/admin/view" method="GET">View</a> |
 </nav>
 
-<p> Welcome to...the admin page! </p>
+<p> Welcome to...the add page! </p>
+<form method="POST"  enctype="multipart/form-data">
+  <label for="file">Select a file:</label>
+  <input type="file"  name="uploaded_file"><br><br>
+  <input type="submit">
+</form>
+
+
 </body>
 </html>
+
 

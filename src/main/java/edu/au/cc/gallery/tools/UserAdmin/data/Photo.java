@@ -1,18 +1,31 @@
-package edu.au.cc.gallery.tools.data;
+package edu.au.cc.gallery.tools.UserAdmin.data;
+import java.io.File;
+import java.nio.file.Paths; 
 public class Photo {
-    private String path;
+    private String file;
     private String owner;
 
-    public String getPath() {
-        return this.path;
+    public Photo(String file, String owner) {
+	setFile(file);
+	setOwner(owner);
+    }
+
+    private String createKeyFromPath(String path) {
+	String key = Paths.get(path).getFileName().toString();
+	return key;
+    }
+    
+    
+    public String getFile() {
+        return this.file;
     }
 
     public String getOwner() {
         return this.owner;
     }
 
-    public void setPath(String pathIn) {
-        this.path = pathIn;
+    public void setFile(String fileIn) {
+        this.file = fileIn;
     }
 
     public void setOwner(String ownerIn) {

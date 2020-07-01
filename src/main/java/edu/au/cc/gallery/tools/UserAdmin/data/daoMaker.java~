@@ -1,0 +1,7 @@
+package edu.au.cc.gallery.tools.data;
+
+public class daoMaker {
+    public static DAO getPhotoDAO() {
+	return new PhotoDAO();
+    }
+}
