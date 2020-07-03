@@ -12,6 +12,7 @@ public class RouteMapper {
     /**Connection and Routing Methods */
    public void getAllRoutes() {
       getWebAppPages();
+      secureRoutes();
       getRoutesToS3();
       getSessionRoutes();
       // getUploadRoutes();
@@ -31,13 +32,18 @@ but if that fails, it'll use nginx as a backup on port 5000. Nginx is running as
         }
     }
 
+    private void secureRoutes() {
+	before("/admin/*", (req, res) -> Authenticator.checkAdmin(req, res));
+    }
 
-
+    
     private void getWebAppPages() {
-        get("/admin",  (req, res) -> UserAdminHelper.modelMaker(req, res, "admin.hbs"));
+        get("/admin",  (req, res) -> UserAdminHelper.adminModelMaker(req, res, "admin.hbs"));
         get("/", (req, res) -> UserAdminHelper.modelMaker(req, res, "login.hbs"));
         get ("/hello", (req, res) -> "Hello Testing!");
-	get("/admin/add", (req, res) -> UserAdminHelper.modelMaker(req, res, "add.hbs"));
+	get("/admin/view", (req, res) -> UserAdminHelper.list(req,res));
+	get("/admin/add", (req, res) -> UserAdminHelper.adminModelMaker(req, res, "add.hbs"));
+	get("/user", (req, res) -> UserAdminHelper.modelMaker(req, res, "regular.hbs"));
     }
 
     private void getSessionRoutes() {
@@ -47,13 +53,8 @@ but if that fails, it'll use nginx as a backup on port 5000. Nginx is running as
     
 
     private void getRoutesToS3() {
-	//  get("/admin/list", (req, res) -> UserAdminHelper.list(req, res));
-	// post("/admin/sendAdd", (req, res) ->  UserAdminHelper.add(req, res));                                                   
+	 get("/admin/list", (req, res) -> UserAdminHelper.list(req, res));
           get("/admin/delete", (req, res) -> UserAdminHelper.delete(req, res));
-	// get("/admin/confirmDelete", (req, res) -> UserAdminHelper.confirmDelete(req, res)); 
-    }
+	    }
 
-    /*    private void getUploadRoutes() {
-        post("/admin/add/upload", (req, res) ->  FileHelper.upload(req, res));
-	} */
 }

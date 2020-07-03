@@ -4,77 +4,124 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
-
+import com.amazonaws.services.s3.model.ListObjectsV2Result;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.AccessControlList;
+import com.amazonaws.services.s3.model.Grant;
+import com.amazonaws.services.s3.model.EmailAddressGrantee;
+import com.amazonaws.services.s3.model.Permission;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.nio.file.Paths;
+
 
 public class S3 {
     private AmazonS3 s3;
     private static final String bucket = "edu.au.cc.cc.image-gallery";
-   
+    private static final String access = "Read";
+
+    //Connect to S3 service.
     public void connect() {
         s3 = AmazonS3ClientBuilder.standard().withRegion("us-east-2").build();
     }
 
-    private String getKeyFromPath(String path) {
-	String key = Paths.get(path).getFileName().toString();
-	return key;
 
+    //Helper method.
+    private String getKeyFromPath(String path, String owner) {
+	String key = owner + "/" + Paths.get(path).getFileName().toString();
+	return key;
     }
 
 
-    public void addPhoto(String path) {
+    //Add a photo to your personal files on the S3 bucket.
+    public void addPhoto(String path, String owner) {
 	try {
-	 String key = getKeyFromPath(path);
-	 s3.putObject(bucket, key, new File(path));
+	    String key = getKeyFromPath(path, owner);
+	    s3.putObject(bucket, key, new File(path));
+	    //setACL(bucket, owner, key);
         }
 	
 	catch (AmazonServiceException e) {
 	    System.err.println(e.getErrorMessage());
 	}
     }
+    
 
-    public void listPhotos(String bucket) {
-	/*	try {
-	 S3Object o = s3.getObject(bucket, key);
-	 S3ObjectInputStream s3is = o.getObjectContent();
-	 FileOutputStream fos = new FileOutputStream(new File(key_name));
-	 byte[] read_buf = new byte[1024];
-	 int read_len = 0;
-	 while ((read_len = s3is.read(read_buf)) > 0) {
-	     fos.write(read_buf, 0, read_len);
-	 }
-	 s3is.close();
-	 fos.close();
+    //List all the photos that you own from the S3 bucket.
+    
+    public ArrayList<Photo> listPhotos(String searcher) {
+	ListObjectsV2Result result = s3.listObjectsV2(bucket);
+        List<S3ObjectSummary> objects = result.getObjectSummaries();
+	return makePhotoArray(objects, searcher);
+     }
+    
+    private ArrayList<Photo> makePhotoArray(List<S3ObjectSummary> objects, String searcher) {
+	String path = "https://s3-us-east-2.amazonaws.com/" + bucket + "/";
+	ArrayList<Photo> photos = new ArrayList<Photo>();
+	for (S3ObjectSummary os : objects) {
+	    String key = os.getKey();
+	    System.out.println(key);
+	    int endOfOwner = key.indexOf('/');
+	    System.out.println(endOfOwner);
+	    String owner = key.substring(0, endOfOwner);
+	    System.out.println(owner);
+	    if (owner.equals(searcher)) {
+		path += key;
+		Photo photo = new Photo(path, searcher);
+		photos.add(photo);
+	    } 
 	}
-    catch (AmazonServiceException e) {
-	System.err.println(e.getErrorMessage());
-	System.exit(1);
+	return photos;
     }
 
-    catch (FileNotFoundException e) {
-	System.err.println(e.getMessage());
-	System.exit(1);
-    }
-
-    catch (IOException e) {
-    System.err.println(e.getMessage());
-    System.exit(1);
-    } */
-}
-
-    public void deletePhoto(String path) {
-	String key =  getKeyFromPath(path);
+   
+    public void deletePhoto(String path, String owner) {
+	String key =  getKeyFromPath(path, owner);
 	try {
 	    s3.deleteObject(bucket, key);
 	}
 
 	catch (AmazonServiceException e) {
 	    System.err.println(e.getErrorMessage());
-	    System.exit(1);
-       }
+	        }
+    }
+
+    //Helper methods that set and search for ACLS.
+
+        public  void setACL(String bucket, String owner, String key) {
+	    try {
+		// get the current ACL
+		AccessControlList acl = s3.getObjectAcl(bucket, key);
+		// set access for the grantee
+		EmailAddressGrantee grantee = new EmailAddressGrantee(owner);
+		Permission permission = Permission.valueOf(access);
+		acl.grantPermission(grantee, permission);
+		s3.setObjectAcl(bucket, key, acl);
+	    }
+
+	    catch (AmazonServiceException e) {
+		System.err.println(e.getErrorMessage());
+		    }
+    }
+
+
+    public  boolean searchForACL(String bucket, String searcher, String key) {
+        try {
+            AccessControlList acl = s3.getObjectAcl(bucket,key);
+            List<Grant> grants = acl.getGrantsAsList();
+            for (Grant grant : grants) {
+                String owner = grant.getGrantee().getIdentifier().toString();
+                if (owner.equals(searcher)) {
+                    return true;
+                }
+            }
+        }
+	catch (AmazonServiceException e) {
+	    System.err.println(e.getErrorMessage());
+		}
+	return false;
     }
 }

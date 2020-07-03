@@ -1,6 +1,7 @@
 package edu.au.cc.gallery.tools.UserAdmin.data;
 import java.io.File;
 import java.nio.file.Paths; 
+
 public class Photo {
     private String file;
     private String owner;
@@ -14,7 +15,6 @@ public class Photo {
 	String key = Paths.get(path).getFileName().toString();
 	return key;
     }
-    
     
     public String getFile() {
         return this.file;
@@ -31,6 +31,4 @@ public class Photo {
     public void setOwner(String ownerIn) {
 	this.owner = ownerIn;
     }
-
-    
 }

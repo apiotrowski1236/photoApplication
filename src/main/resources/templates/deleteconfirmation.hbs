@@ -1,18 +1,22 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Delete Confirmation</title>
-</head>
-<body>
-<nav>
-  <a href="/admin/users/">Admin</a> |
-  <a href="/admin/add">Add</a> |
-  <a href="/admin/view">View</a> |
-</nav>
+  <head>
+    <meta charset="utf-8">
+    <title>Delete Confirmation</title>
+  </head>
 
-<p> Welcome to...the Delete Confirmation page! </p>
-</body>
+  <body>
+    <nav>
+      <a href="/admin/users/", method="GET">Admin</a> |
+      <a href="/admin/add", method="GET">Add</a> |
+      <a href="/admin/view", method="GET">View</a> |
+    </nav>
+
+    <p> Welcome to...the Delete Confirmation page! </p>
+    <p>Are you sure that you want to delete? Click "yes" to continue.</p>
+    <a href="/admin/delete", method="GET">yes</a>
+    
+  </body>
 </html>
 

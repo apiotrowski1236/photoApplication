@@ -1,18 +1,29 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Admin</title>
-</head>
-<body>
-<nav>
-  <a href="/admin/users/" method="GET">Admin</a> |
-  <a href="/admin/add" method="GET">Add</a> |
-  <a href="/admin/view" method="GET">View</a> |
-</nav>
 
-<p> Welcome to...the admin page! </p>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Admin</title>
+  </head>
+
+  <body>
+    <nav>
+      <a href="/admin/users/" method="GET">Admin</a> |
+      <a href="/admin/add" method="GET">Add</a> |
+      <a href="/admin/view" method="GET">View</a> |
+    </nav>
+
+    <p> Hello {{user}}!  Welcome to...the admin page! </p>
+
+    <!--Tester -->
+    <form>
+      <p>View your photos.</p>
+      <form action="/admin/view", method="GET">
+	<label for="owner">Email:</label><br>
+	<input type="text" id="owner" name="owner">
+	<input type="submit" value="Submit">
+      </form>
+  </body>
 </html>
 

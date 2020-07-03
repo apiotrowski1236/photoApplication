@@ -7,11 +7,19 @@
 </head>
 <body>
 <nav>
-  <a href="/admin/users/">Admin</a> |
-  <a href="/admin/add">Add</a> |
-  <a href="/admin/view">View</a> |
+  <a href="/admin/users/", method="GET">Admin</a> |
+  <a href="/admin/add", method="GET">Add</a> |
+  <a href="/admin/view", method="GET">View</a> |
 </nav>
 
 <p> Welcome to...the view Photos page! </p>
+{{#each photos}}
+<p> {{file}} </p>
+<a href={{file}}>
+ <img src={{file}} alt = "one of your files" style="width:150px"> </a>
+<br>
+<a href="/admin/delete?path={{file}}", method="GET"> Delete </a>
+<hr>
+{{/each}}
 </body>
 </html>

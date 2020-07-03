@@ -6,26 +6,25 @@ import edu.au.cc.gallery.tools.UserAdmin.data.S3;
 public class PhotoDAO implements DAO<Photo> {
     private S3 s3;
     private ArrayList<Photo> photos;
+
     public PhotoDAO() {
 	s3 = new S3();
 	s3.connect();
     }
 
-    public List<Photo> getAll() {
+    public ArrayList<Photo> listPhotos(String searcher) {
+	photos = s3.listPhotos(searcher);
 	return photos;
     }
 
     public void add(Photo photo) {
 	String path  = photo.getFile();
-	s3.addPhoto(path);
+	String owner = photo.getOwner();
+	s3.addPhoto(path, owner);
     }
     public void delete(Photo photo) {
 	String path = photo.getFile();
-	s3.deletePhoto(path);
+	String owner = photo.getOwner();
+	s3.deletePhoto(path, owner);
     }
-  
-
-
-
-
 }

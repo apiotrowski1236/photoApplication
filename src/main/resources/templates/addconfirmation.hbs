@@ -1,20 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Add Confirmation</title>
-</head>
-<body>
-<nav>
-  <a href="/admin/users/">Admin</a> |
-  <a href="/admin/add">Add</a> |
-  <a href="/admin/view">View</a> |
-</nav>
 
-<p> Welcome to...the Add Confirmation page! </p>
-<p> You've added {{path}} to your S3 bucket. </p>
-<p> Would you like to delete {{path}}? </p>
-<a href="/admin/delete?path={{path}}", method="GET">Delete photo</a>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Add Confirmation</title>
+  </head>
+
+  <body>
+    <nav>
+      <a href="/admin/users/", method="GET">Admin</a> |
+      <a href="/admin/add", method="GET">Add</a> |
+      <a href="/admin/view", method="GET">View</a> |
+    </nav>
+
+    <p> Welcome to...the Add Confirmation page! </p>
+    <p> You've added {{path}} to your S3 bucket. </p>
+    <p> Would you like to delete {{path}}? </p>
+    <a href="/admin/delete?path={{path}}", method="GET">Delete photo</a>
+
+  </body>
 </html>

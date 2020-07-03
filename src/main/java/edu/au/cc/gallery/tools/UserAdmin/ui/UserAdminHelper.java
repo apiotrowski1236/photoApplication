@@ -6,7 +6,8 @@ import spark.Response;
 import org.json.simple.JSONArray;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-
+import java.util.List;
+import java.util.ArrayList;
 import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
@@ -25,9 +26,8 @@ public class UserAdminHelper {
     }
 
 
-
-    public static void add(String path) {
-       String owner = "TESTFORNOWBUTREPLACELATER";
+        
+    public static void add(String path, String owner) {
        Photo photo = new Photo(path, owner);
        try {
 	   DAO dao = daoMaker.getPhotoDAO();
@@ -37,7 +37,6 @@ public class UserAdminHelper {
 	   e.printStackTrace();
        }
     }
-    
     
 
       public static String delete(Request req, Response resp) {
@@ -63,66 +62,42 @@ public class UserAdminHelper {
 	    .render(new ModelAndView(model, fileName));
     }
 
-    /*
-
-      public static String change(Request req, Response resp) {
-        Map<String, Object> model = new HashMap<String, Object>();
-	String username = parseUserNameOnly(req);
-	return makeConfirmationPage(username, "change.hbs");
-    }
-
+    /*     
     public static String confirmDelete(Request req, Response resp) {
-	 String username = parseUserNameOnly(req);
+	 String path = parsePathOnly(req);
 	 return makeConfirmationPage(username, "delete.hbs");
-    }
+	 } */
     
 
-    public static String sendPasswordChange(Request req, Response resp) {
-	String username, password;
-        username = req.queryParams("username");
-        password = req.queryParams("password");
-
-        try {
-	    UserDAO dao = Postgres.getUserDAO();
-	    dao.updateUserPassword(username, password);
-	}
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return "Modified " + username + "to" +  password;
-    }
-
-    
-public static String sendNameChange(Request req, Response resp) {
-    String username, fullname;
-     username = req.queryParams("username");
-     fullname = req.queryParams("fullname");
-
-      try {
-	  UserDAO dao = Postgres.getUserDAO();
-	  dao.updateUserFullName(username, fullname);
-      }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return "Modified " + username + "to" +  fullname;
-	} 
-
-    
+       
     public static String list(Request req, Response resp) {
-	 JSONArray userArray = null;
-	 try {
-	        UserDAO dao = Postgres.getUserDAO();
-	       userArray = dao.getUsers();
+        List<Photo> photoList = new ArrayList<Photo>();
+	String owner;
+	 String user =  req.session().attribute("user");
+	try {
+               DAO dao = daoMaker.getPhotoDAO();
+	        photoList = dao.listPhotos(user);
           }
-         catch(Exception e) {
+
+	catch(Exception e) {
              e.printStackTrace();
           }
 	 Map<String, Object> model = new HashMap<String, Object>();
-	   model.put("users", userArray);
+	 model.put("photos", photoList);
 	   return new HandlebarsTemplateEngine()
-	       .render(new ModelAndView(model, "userlist.hbs"));
-	       } */
+	       .render(new ModelAndView(model, "view.hbs"));
+	       } 
+
+
+
+    public static String adminModelMaker(Request req, Response resp, String fileName) {
+	 Map<String, Object> model = new HashMap<String, Object>();
+	 String user =  req.session().attribute("user");
+	 model.put("user", user);
+	 return new HandlebarsTemplateEngine()
+	     .render(new ModelAndView(model, fileName));
+    }
+
 
     
     public static String modelMaker(Request req, Response resp, String fileName) {

@@ -2,8 +2,7 @@ package edu.au.cc.gallery.tools.UserAdmin.data;
 import java.util.List;
 
 public interface DAO<T> {
-    //add return types to this!
-     List<T> getAll();
+    List<T> listPhotos(String o);
     void add(T t);
-     void delete(T t);
+    void delete(T t);
 }

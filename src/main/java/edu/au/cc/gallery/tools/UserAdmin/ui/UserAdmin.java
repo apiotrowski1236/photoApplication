@@ -1,8 +1,6 @@
 package edu.au.cc.gallery.tools.UserAdmin.ui;
 import static spark.Spark.*;
-import java.sql.SQLException;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
+import spark.*;
 import java.util.Map;
 import java.io.File;
 import java.util.HashMap;
@@ -13,7 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
-import static spark.Spark.*;
+
 import edu.au.cc.gallery.tools.UserAdmin.ui.UserAdminHelper;
 import edu.au.cc.gallery.tools.UserAdmin.ui.RouteMapper;
 
@@ -45,9 +43,9 @@ public class UserAdmin {
             try (InputStream input = req.raw().getPart("uploaded_file").getInputStream()) { 
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
-	    
-	    String path = tempFile.toString();
-	    admin.helper.add(path);
+	     String path = tempFile.toString();
+	     String owner =  req.session().attribute("user");
+	     admin.helper.add(path, owner);
 	    return admin.helper.makeConfirmationPage(path, "addconfirmation.hbs");
 
         });
