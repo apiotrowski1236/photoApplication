@@ -35,13 +35,13 @@ public class Authenticator {
 	    e.printStackTrace();
 	}
 
-        if ((username.equals("admin")) && (password.equals("password"))) {
+	/* if ((username.equals("admin")) && (password.equals("password"))) {
 	     req.session().attribute("user", username);
              resp.redirect("/admin");
-	}
+	     }*/
 
 	
-	/*try {
+	try {
 	     UserDAO dao = Postgres.getUserDAO();
 	     if (dao.searchForUser(username, password) == false){
 		 resp.redirect("/login");
@@ -62,7 +62,7 @@ public class Authenticator {
 	}
 	catch(Exception e) {
 	    e.printStackTrace();
-	    } */
+	    } 
 	return "";
     }
 
