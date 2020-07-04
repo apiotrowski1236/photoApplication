@@ -12,22 +12,22 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
 
-import edu.au.cc.gallery.tools.UserAdmin.ui.UserAdminHelper;
+import edu.au.cc.gallery.tools.UserAdmin.ui.PhotoHelper;
 import edu.au.cc.gallery.tools.UserAdmin.ui.RouteMapper;
 
 
-public class UserAdmin {
+public class App {
     
     RouteMapper mapper;
-    UserAdminHelper helper;
-    public UserAdmin() {
+    PhotoHelper helper;
+    public App() {
 
 	mapper = new RouteMapper();
-	helper = new UserAdminHelper();
+	helper = new PhotoHelper();
     }
     
     public static void main(String[] args) {
-	UserAdmin admin = new UserAdmin();
+	App admin = new App();
 	 admin.mapper.connectToServer();
 
 	File uploadDir = new File("upload");
@@ -42,7 +42,10 @@ public class UserAdmin {
 
             try (InputStream input = req.raw().getPart("uploaded_file").getInputStream()) { 
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
-            }
+		input.close();
+	    }
+	    
+	    
 	     String path = tempFile.toString();
 	     String owner =  req.session().attribute("user");
 	     admin.helper.add(path, owner);

@@ -17,7 +17,7 @@ import edu.au.cc.gallery.tools.UserAdmin.data.DAO;
 import edu.au.cc.gallery.tools.UserAdmin.data.daoMaker;
 import edu.au.cc.gallery.tools.UserAdmin.data.PhotoDAO;
 import edu.au.cc.gallery.tools.UserAdmin.data.S3;
-public class UserAdminHelper {
+public class PhotoHelper {
 
    public static String  parsePathOnly(Request req) {
         String path;
@@ -41,10 +41,10 @@ public class UserAdminHelper {
 
       public static String delete(Request req, Response resp) {
 	  String path;
-	  String owner = "TESTFORNOWBUTREPLACELATER";
-	  path = req.queryParams("path");
-	  Photo photo = new Photo(path, owner);
-	  try {
+	   path = req.queryParams("path");
+	   String user =  req.session().attribute("user");
+           Photo photo = new Photo(path, user);
+	   try {
 	    DAO dao = daoMaker.getPhotoDAO();
             dao.delete(photo);
 	  }
@@ -62,13 +62,7 @@ public class UserAdminHelper {
 	    .render(new ModelAndView(model, fileName));
     }
 
-    /*     
-    public static String confirmDelete(Request req, Response resp) {
-	 String path = parsePathOnly(req);
-	 return makeConfirmationPage(username, "delete.hbs");
-	 } */
-    
-
+   
        
     public static String list(Request req, Response resp) {
         List<Photo> photoList = new ArrayList<Photo>();

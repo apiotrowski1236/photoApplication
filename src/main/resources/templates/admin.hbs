@@ -15,15 +15,9 @@
     </nav>
 
     <p> Hello {{user}}!  Welcome to...the admin page! </p>
-
-    <!--Tester -->
-    <form>
-      <p>View your photos.</p>
-      <form action="/admin/view", method="GET">
-	<label for="owner">Email:</label><br>
-	<input type="text" id="owner" name="owner">
-	<input type="submit" value="Submit">
-      </form>
+    <p> Here you can...</p>
+    <p><a href="/admin/list" method="GET">List your users, delete, and change passwords.</a></p>
+    <p><a href="/admin/add" method="GET">Add a user.</a></p>
   </body>
 </html>
 

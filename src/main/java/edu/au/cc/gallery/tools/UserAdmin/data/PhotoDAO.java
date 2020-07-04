@@ -24,7 +24,8 @@ public class PhotoDAO implements DAO<Photo> {
     }
     public void delete(Photo photo) {
 	String path = photo.getFile();
-	String owner = photo.getOwner();
-	s3.deletePhoto(path, owner);
+	String key = path.substring(62);
+	System.out.println(key);
+	s3.deletePhoto(key);
     }
 }

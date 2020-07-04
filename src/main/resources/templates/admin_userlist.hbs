@@ -1,0 +1,22 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AKP0048 UserAdmin List</title>
+</head>
+
+
+
+<body>
+
+<p>Your Users</p>
+
+ {{#each users}}
+<p>Username:<a href="/admin/change?username={{username}}" method="GET"> {{username}}</a> Full name: {{fullname}}  <a href="/admin/confirmDelete?user
+name={{username}}" method="GET"> Delete </a> </p> <br/>
+  {{/each}}
+<p>Click<a href="/admin" method="GET"> here</a> to return to homepage </p>
+
+</body>
+</html>

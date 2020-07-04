@@ -59,9 +59,9 @@ public class S3 {
      }
     
     private ArrayList<Photo> makePhotoArray(List<S3ObjectSummary> objects, String searcher) {
-	String path = "https://s3-us-east-2.amazonaws.com/" + bucket + "/";
-	ArrayList<Photo> photos = new ArrayList<Photo>();
+       ArrayList<Photo> photos = new ArrayList<Photo>();
 	for (S3ObjectSummary os : objects) {
+	    String path = "https://s3-us-east-2.amazonaws.com/" + bucket + "/";
 	    String key = os.getKey();
 	    System.out.println(key);
 	    int endOfOwner = key.indexOf('/');
@@ -78,8 +78,8 @@ public class S3 {
     }
 
    
-    public void deletePhoto(String path, String owner) {
-	String key =  getKeyFromPath(path, owner);
+    public void deletePhoto(String key) {
+	//String key =  getKeyFromPath(path, owner);
 	try {
 	    s3.deleteObject(bucket, key);
 	}

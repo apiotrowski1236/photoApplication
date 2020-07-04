@@ -5,6 +5,12 @@ import spark.Response;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.au.cc.gallery.tools.UserAdmin.login.DB;
+import edu.au.cc.gallery.tools.UserAdmin.login.Postgres;
+import edu.au.cc.gallery.tools.UserAdmin.login.UserDAO;
+import edu.au.cc.gallery.tools.UserAdmin.login.User;
+
+
 public class Authenticator {
 
     public static String debug(Request req, Response resp) {
@@ -14,32 +20,52 @@ public class Authenticator {
 	}
 	return sb.toString();
     }
+    
 
     public static String login(Request req, Response resp) {
-	String username;
-	String password;
+	String username = "";
+	String password = "";
+	
 	Map<String, Object> model = new HashMap<String, Object>();
 	try {
 	    username = req.queryParams("username");
 	    password = req.queryParams("password");
-	    if ((username.equals("admin")) && (password.equals("password"))) {
-		req.session().attribute("user", username);
-		resp.redirect("/admin");
-	    }
-	    else if ((username.equals("user")) && (password.equals("password"))) {
-		req.session().attribute("user", username);
-		resp.redirect("/user");
-	    }
-	    
-	    else {
-		resp.redirect("/login");
-	    }
 	}
 	catch(Exception e) {
 	    e.printStackTrace();
 	}
+
+        if ((username.equals("admin")) && (password.equals("password"))) {
+	     req.session().attribute("user", username);
+             resp.redirect("/admin");
+	}
+
+	
+	/*try {
+	     UserDAO dao = Postgres.getUserDAO();
+	     if (dao.searchForUser(username, password) == false){
+		 resp.redirect("/login");
+		}
+	      else {
+		   //If admin and password is correct.
+		   if ((username.equals("admin"))) {
+			 req.session().attribute("user", username);
+			 resp.redirect("/admin");
+		     }
+
+		   //If regular user and password is correct. 
+		     else  {
+			 req.session().attribute("user", username);
+			 resp.redirect("/login/welcome");
+		     }
+	       } 
+	}
+	catch(Exception e) {
+	    e.printStackTrace();
+	    } */
 	return "";
     }
+
 
    public static boolean isAdmin(String username) {
 	if ((username != null) && (username.equals("admin"))) {
