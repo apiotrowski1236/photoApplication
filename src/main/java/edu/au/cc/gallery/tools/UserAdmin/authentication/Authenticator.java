@@ -35,11 +35,6 @@ public class Authenticator {
 	    e.printStackTrace();
 	}
 
-	/* if ((username.equals("admin")) && (password.equals("password"))) {
-	     req.session().attribute("user", username);
-             resp.redirect("/admin");
-	     }*/
-
 	
 	try {
 	     UserDAO dao = Postgres.getUserDAO();
@@ -48,10 +43,19 @@ public class Authenticator {
 		}
 	      else {
 		   //If admin and password is correct.
-		   if ((username.equals("admin"))) {
+		   if ((username.equals("admin")))  {
 			 req.session().attribute("user", username);
 			 resp.redirect("/admin");
 		     }
+
+
+		   //If admin and password is correct for the TA user.                                                                                                                                                      
+                   else if ((username.equals("dongji")))  {
+                         req.session().attribute("user", username);
+                         resp.redirect("/admin");
+                     }
+
+
 
 		   //If regular user and password is correct. 
 		     else  {

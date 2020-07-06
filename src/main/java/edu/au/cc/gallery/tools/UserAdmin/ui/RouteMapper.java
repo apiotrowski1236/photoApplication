@@ -60,7 +60,8 @@ but if that fails, it'll use nginx as a backup on port 5000. Nginx is running as
 	    }
 
     private void getAdminOnlyRoutes() {
-	get("/admin/list", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_userlist.hbs"));
+	get("/admin/listPhotos", (req, res) -> PhotoHelper.list(req, res));
+	get("/admin/list", (req, res) -> AdminHelper.list(req, res));
 	get("/admin/change", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_change.hbs"));
 	get("/admin/confirmadd", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_addconfirmation.hbs"));
 	post("admin/add", (req, res) -> AdminHelper.add(req, res));

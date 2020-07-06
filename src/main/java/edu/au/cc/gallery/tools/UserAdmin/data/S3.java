@@ -19,13 +19,18 @@ import java.nio.file.Paths;
 
 
 public class S3 {
+
     private AmazonS3 s3;
-    private static final String bucket = "edu.au.cc.cc.image-gallery";
+    //    private static final String bucket = System.getenv("S3_IMAGE_BUCKET");
+    private String bucket = "edu.au.cc.cc.image-gallery";
     private static final String access = "Read";
 
     //Connect to S3 service.
     public void connect() {
         s3 = AmazonS3ClientBuilder.standard().withRegion("us-east-2").build();
+        if (System.getenv("S3_Bucket") != null) {
+	    bucket = System.getenv("S3_Bucket");
+	}
     }
 
 
@@ -63,12 +68,9 @@ public class S3 {
 	for (S3ObjectSummary os : objects) {
 	    String path = "https://s3-us-east-2.amazonaws.com/" + bucket + "/";
 	    String key = os.getKey();
-	    System.out.println(key);
-	    int endOfOwner = key.indexOf('/');
-	    System.out.println(endOfOwner);
+	     int endOfOwner = key.indexOf('/');
 	    String owner = key.substring(0, endOfOwner);
-	    System.out.println(owner);
-	    if (owner.equals(searcher)) {
+	       if (owner.equals(searcher)) {
 		path += key;
 		Photo photo = new Photo(path, searcher);
 		photos.add(photo);

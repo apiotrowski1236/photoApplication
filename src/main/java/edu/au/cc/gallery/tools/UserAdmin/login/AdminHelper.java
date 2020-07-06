@@ -14,7 +14,8 @@ import java.util.HashMap;
 import edu.au.cc.gallery.tools.UserAdmin.login.Postgres;
 import edu.au.cc.gallery.tools.UserAdmin.login.UserDAO;
 import edu.au.cc.gallery.tools.UserAdmin.login.DB;
-
+import edu.au.cc.gallery.tools.UserAdmin.login.User;
+import edu.au.cc.gallery.tools.UserAdmin.login.PostgresDAO;
 
 
 public class AdminHelper {
@@ -116,6 +117,7 @@ public class AdminHelper {
          catch(Exception e) {
              e.printStackTrace();
           }
+
 	 Map<String, Object> model = new HashMap<String, Object>();
 	   model.put("users", userList);
 	   return new HandlebarsTemplateEngine()

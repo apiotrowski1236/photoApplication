@@ -6,17 +6,18 @@
   <title>AKP0048 UserAdmin List</title>
 </head>
 
-
-
 <body>
 
-<p>Your Users</p>
+<p>Your Users -TEST TEST</p>
 
- {{#each users}}
-<p>Username:<a href="/admin/change?username={{username}}" method="GET"> {{username}}</a> Full name: {{fullname}}  <a href="/admin/confirmDelete?user
+{{#each users as |User|}}
+
+<p>Username:<a href="/admin/change?username={{username}}" method="GET">{{User.username}}</a> Full name: {{User.fullname}}  <a href="/admin/confirmDelete?user                                                        
 name={{username}}" method="GET"> Delete </a> </p> <br/>
-  {{/each}}
+{{/each}}
+
 <p>Click<a href="/admin" method="GET"> here</a> to return to homepage </p>
 
 </body>
 </html>
+

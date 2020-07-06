@@ -25,9 +25,8 @@ public class PhotoHelper {
 	return path;
     }
 
-
         
-    public static void add(String path, String owner) {
+    public static String add(String path, String owner) {
        Photo photo = new Photo(path, owner);
        try {
 	   DAO dao = daoMaker.getPhotoDAO();
@@ -36,6 +35,7 @@ public class PhotoHelper {
        catch(Exception e) {
 	   e.printStackTrace();
        }
+       return makeConfirmationPage(path, "add_confirmation.hbs");
     }
     
 
@@ -51,8 +51,7 @@ public class PhotoHelper {
 	  catch(Exception e) {
 	      e.printStackTrace();
 	  }
-	  return "deleted";
-	  //return makeConfirmationPage(username, "deleteconfirmation.hbs");
+       	  return makeConfirmationPage(path, "delete_confirmation.hbs");
 	  } 
 
     public static String  makeConfirmationPage(String path, String fileName) {

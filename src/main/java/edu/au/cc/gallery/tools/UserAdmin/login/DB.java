@@ -10,23 +10,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Map;
 import java.util.HashMap;
-//import edu.au.cc.gallery.tools.UserAdmin.aws.Secrets;
+import edu.au.cc.gallery.tools.UserAdmin.authentication.Secrets;
 
 public class DB {
     Secrets secretManager = new Secrets();
     private Connection connection;
-    private static final String dbURL = "jdbc:postgresql://db1.cgtykvv08hlh.us-east-2.rds.amazonaws.com:5432/";
-
 
     /*Connnect to the database. */ 
     public void connect() throws SQLException {
+	
 	try {
 	    Class.forName("org.postgresql.Driver");
-	    //    JSONObject secret = getSecret();
-	    //String userName = getUserName(secret);
-	    //String password = getPassword(secret);
-	    String user = "postgres"; //OBVIOUSLY CHANGE!
-	    String password = "haroldisthebestcat"; //OBVIOUSLY CHANGE!
+	    String host = System.getenv("PG_HOST");
+	    String port = System.getenv("PG_PORT");
+	    String dbURL;
+
+	    if ((host == null) || (port == null)) {
+		dbURL = "jdbc:postgresql://db1.cgtykvv08hlh.us-east-2.rds.amazonaws.com:5432/";
+	    }
+
+	    else {
+		dbURL = "jdbc:postgresql://" + System.getenv("PG_HOST") + ":" + System.getenv("PG_PORT") +"/";
+	    }
+
+	    
+	    String user = System.getenv("IG_USER");
+            String password = System.getenv("IG_PASSWD");
+	    
+	    if ((user == null) || (password == null)) {
+		 user = "image_gallery";
+		password = "simple";
+	    }
+
 	    connection = DriverManager.getConnection(dbURL, user, password);
 	}
 	catch (Exception ex) {
@@ -38,7 +53,7 @@ public class DB {
  }
 
     /*************************************Secret Retrieving and Parsing Functions*******************/
-    /*
+
     //Retrieve the secret 
     public JSONObject getSecret() {
 	String jsonString = secretManager.getImageGallerySecret();
@@ -66,7 +81,7 @@ public class DB {
     public String getUserName(JSONObject secret) {
 	String userName = (String) secret.get("username");
 	return userName;
-	} */
+	} 
 
 
 
@@ -86,7 +101,7 @@ public class DB {
 
 
     public void addUser(String userIn, String passwordIn, String nameIn) throws SQLException {
-	String sql = "INSERT INTO users(username, password, full_name)" + "VALUES(?,?,?)";
+	String sql = "INSERT INTO users(username, password, fullname)" + "VALUES(?,?,?)";
 	PreparedStatement statement = connection.prepareStatement(sql);
 	statement.setString(1, userIn);
 	statement.setString(2, passwordIn);
