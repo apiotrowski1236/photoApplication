@@ -45,6 +45,7 @@ but if that fails, it'll use nginx as a backup on port 5000. Nginx is running as
         get ("/hello", (req, res) -> "Hello Testing!");
 	get("/login/view", (req, res) -> PhotoHelper.list(req,res));
 	get("/login/add", (req, res) -> PhotoHelper.adminModelMaker(req, res, "add.hbs"));
+	get ("/login/loginerror", (req, res) -> PhotoHelper.adminModelMaker(req, res, "login_error.hbs"));
 	get("/login/welcome", (req, res) -> PhotoHelper.adminModelMaker(req, res, "welcome.hbs"));
     }
 

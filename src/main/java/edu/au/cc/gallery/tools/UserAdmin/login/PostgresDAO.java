@@ -1,7 +1,8 @@
 package edu.au.cc.gallery.tools.UserAdmin.login;
 
-import java.util.List;
-import java.util.ArrayList;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -18,16 +19,19 @@ public class PostgresDAO implements UserDAO {
     }
 
     
- public ArrayList<User>  getUsers() throws SQLException {
-     ArrayList<User> users = new ArrayList<User>();
+ public JSONArray getUsers() throws SQLException {
+     JSONArray users = new JSONArray();
      ResultSet rs = database.executePreparedStatement("select * from users");
 
      while(rs.next()) {
 	 String username = rs.getString(1);
 	 String password = rs.getString(2);
 	 String fullname = rs.getString(3);
-	 User user = new User(username, password, fullname);
-	 users.add(user);
+	 JSONObject user = new JSONObject();
+	 user.put("username", username);
+	 user.put("password", password);
+	 user.put("fullname", fullname);
+       	 users.add(user);
       }
      rs.close();
      return users;

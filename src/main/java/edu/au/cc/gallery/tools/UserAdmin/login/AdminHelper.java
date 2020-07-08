@@ -109,20 +109,20 @@ public class AdminHelper {
 
 
     public static String list(Request req, Response resp) {
-	List<User> userList = new ArrayList<User>();
+	 JSONArray userArray = null;
 	 try {
 	        UserDAO dao = Postgres.getUserDAO();
-	       userList = dao.getUsers();
+	       userArray = dao.getUsers();
           }
          catch(Exception e) {
              e.printStackTrace();
           }
-
 	 Map<String, Object> model = new HashMap<String, Object>();
-	   model.put("users", userList);
+	   model.put("users", userArray);
 	   return new HandlebarsTemplateEngine()
 	       .render(new ModelAndView(model, "admin_userlist.hbs"));
     }
+
 
     
     public static String adminModelMaker(Request req, Response resp, String fileName) {

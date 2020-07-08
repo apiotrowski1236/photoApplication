@@ -21,14 +21,14 @@ public class DB {
 	
 	try {
 	    Class.forName("org.postgresql.Driver");
-	    String host = System.getenv("PG_HOST");
-	    String port = System.getenv("PG_PORT");
+	    //  String host = System.getenv("PG_HOST");
+	    // String port = System.getenv("PG_PORT");
 	    String dbURL;
 
-	    if ((host == null) || (port == null)) {
+	    //    if ((host == null) || (port == null)) {
 		dbURL = "jdbc:postgresql://db1.cgtykvv08hlh.us-east-2.rds.amazonaws.com:5432/";
-	    }
-
+		//  }
+		/*
 	    else {
 		dbURL = "jdbc:postgresql://" + System.getenv("PG_HOST") + ":" + System.getenv("PG_PORT") +"/";
 	    }
@@ -36,11 +36,11 @@ public class DB {
 	    
 	    String user = System.getenv("IG_USER");
             String password = System.getenv("IG_PASSWD");
-	    
-	    if ((user == null) || (password == null)) {
-		 user = "image_gallery";
-		password = "simple";
-	    }
+		*/
+		//	    if ((user == null) || (password == null)) {
+		String user = "image_gallery";
+		String password = "simple";
+		// }
 
 	    connection = DriverManager.getConnection(dbURL, user, password);
 	}
