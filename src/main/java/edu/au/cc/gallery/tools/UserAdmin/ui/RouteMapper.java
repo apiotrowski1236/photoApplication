@@ -1,3 +1,4 @@
+
 package edu.au.cc.gallery.tools.UserAdmin.ui;
 import static spark.Spark.*;
 import spark.Request;
@@ -61,14 +62,23 @@ but if that fails, it'll use nginx as a backup on port 5000. Nginx is running as
 	    }
 
     private void getAdminOnlyRoutes() {
+	//Give admins ability to list, * add and delete their photos *
 	get("/admin/listPhotos", (req, res) -> PhotoHelper.list(req, res));
+	//What happpens right after the admin asks to add, list, or change  users. 
 	get("/admin/list", (req, res) -> AdminHelper.list(req, res));
-	get("/admin/change", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_change.hbs"));
-	get("/admin/confirmadd", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_addconfirmation.hbs"));
+	post("/admin/changePassword", (req,res) -> AdminHelper.sendPasswordChange(req, res));
+	post("/admin/changeName", (req,res) -> AdminHelper.sendNameChange(req, res)); 
 	post("admin/add", (req, res) -> AdminHelper.add(req, res));
-	get("/admin/add", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_add.hbs"));
+	get("/admin/change", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_change.hbs"));
+	//Make sure that the admin actually wants to delete the user.
+	get("/admin/confirmDelete", (req, res) -> AdminHelper.confirmDelete(req, res));
+	//Send the delete request after the user has confirmed it.
+	get("/admin/delete", (req, res) -> AdminHelper.delete(req, res));
+	//Final pages after a user add/change/delete has gone through succesfully.
 	get("/admin/changeconfirmation", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_changeconfirmation.hbs"));
 	get("/admin/deleteconfirmation", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_deleteconfirmation.hbs"));
+	get("/admin/confirmadd", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_addconfirmation.hbs"));
+	get("/admin/add", (req, res) -> AdminHelper.adminModelMaker(req, res, "admin_add.hbs"));
    }
     
 }

@@ -7,16 +7,22 @@
 </head>
 
 <body>
+ <nav>
+      <a href="/admin/users/" method="GET">Admin</a> |
+      <a href="/admin/add" method="GET">Add a Photo</a> |
+      <a href="/admin/listPhotos" method="GET">View Your Photos</a> |
+      <a href="/admin/list" method="GET">List and Modify Current Users</a> |
+      <a href="/admin/add" method ="GET">Add a User</a>
+    </nav>
 
-<p>Your Users -TEST TEST</p>
+
+<p>Your Users</p>
 
 {{#each users as |User|}}
 
-<p>Username:<a href="/admin/change?username={{username}}" method="GET">{{User.username}}</a> Full name: {{User.fullname}}  <a href="/admin/confirmDelete?user                                                        
-name={{username}}" method="GET"> Delete </a> </p> <br/>
+ <p>Username:<a href="/admin/change?username={{username}}" method="GET">{{username}}</a> Full name: {{fullname}}
+   <a href="/admin/confirmDelete?username={{username}}" method="GET"> Delete </a> </p> <br/>
 {{/each}}
-
-<p>Click<a href="/admin" method="GET"> here</a> to return to homepage </p>
 
 </body>
 </html>

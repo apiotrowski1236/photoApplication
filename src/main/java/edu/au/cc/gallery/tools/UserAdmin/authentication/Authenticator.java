@@ -39,6 +39,7 @@ public class Authenticator {
 	try {
 	     UserDAO dao = Postgres.getUserDAO();
 
+	     //If either the username or password is not found
 	     if (dao.searchForUser(username, password) == false){
 		 resp.redirect("/login/loginerror");
 		}

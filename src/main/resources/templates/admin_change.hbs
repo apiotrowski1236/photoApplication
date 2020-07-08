@@ -5,20 +5,27 @@
   <title>AKP0048 UserAdmin WebApp</title>
 </head>
 <body>
-  <h1>Change User Password for {{username}} </h1>
+<nav>
+      <a href="/admin/users/" method="GET">Admin</a> |
+      <a href="/admin/add" method="GET">Add a Photo</a> |
+      <a href="/admin/listPhotos" method="GET">View Your Photos</a> |
+      <a href="/admin/list" method="GET">List and Modify Current Users</a> |
+      <a href="/admin/add" method ="GET">Add a User</a>
+    </nav>
+  
+  <p>Change User Password for {{username}} </p>
  <form id="changePasswordForm"  action= "/admin/changePassword?username={{username}}" method="POST">
    user name: <input type="text" name="username" value=""/> </br>
    password: <input type="text" name="password" value="" /> </br>
    <input type="submit" value="Change" />
  </form>
 
- <h1>Change Full Name for {{username}}</h1>
+ <p>Change Full Name for {{username}}</p>
  <form id="changeNameForm"  action= "/admin/changeName?username={{username}}" method="POST">
     user name: <input type="text" name="username" value=""/> </br>
    fullName: <input type="text" name="fullname" value="" /> </br>
     <input type="submit" value="Change" />
  </form>
- <h2>Click<a href="/admin" method="GET"> here</a> to return to homepage </h2>
 
 </body>
 </html>

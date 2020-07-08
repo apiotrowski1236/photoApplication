@@ -73,7 +73,7 @@ public class AdminHelper {
     
     public static String confirmDelete(Request req, Response resp) {
 	 String username = parseUserNameOnly(req);
-	 return makeConfirmationPage(username, "admin_delete.hbs");
+	 return makeConfirmationPage(username, "admin_checkdelete.hbs");
     }
 
     
@@ -89,7 +89,7 @@ public class AdminHelper {
         catch(Exception e) {
             e.printStackTrace();
         }
-        return "Modified " + username + "to" +  password;
+        return makeConfirmationPage(username, "admin_changeconfirmation.hbs");
     }
 
     public static String sendNameChange(Request req, Response resp) {
@@ -104,7 +104,7 @@ public class AdminHelper {
         catch(Exception e) {
             e.printStackTrace();
         }
-        return "Modified " + username + "to" +  fullname;
+      return makeConfirmationPage(username, "admin_changeconfirmation.hbs");
 	}
 
 
@@ -127,6 +127,8 @@ public class AdminHelper {
     
     public static String adminModelMaker(Request req, Response resp, String fileName) {
 	Map<String, Object> model = new HashMap<String, Object>();
+	String  username = parseUserNameOnly(req);
+	model.put("username", username);
 	return new HandlebarsTemplateEngine()
 	    .render(new ModelAndView(model, fileName));
     }
